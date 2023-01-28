@@ -7,7 +7,7 @@ public interface IStudentDao
 
 	String save(Student student);
 
-	String findById(Integer sid); // create record
+	Student findById(Integer sid); // create record
 
 	String updateById(Integer sid);
 

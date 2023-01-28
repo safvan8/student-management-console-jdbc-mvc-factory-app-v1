@@ -3,7 +3,6 @@ package in.ineuron.main;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.io.ObjectInputFilter.Status;
 
 import in.ineuron.controller.IStudentController;
 import in.ineuron.dto.Student;
@@ -20,6 +19,8 @@ public class TestApp
 		String name, city, email, country;
 
 		String status = null;
+		
+		Student studentRecord;
 
 		try
 		{
@@ -84,14 +85,23 @@ public class TestApp
 
 				case 2:
 					System.out.println("READ");
+					
+					System.out.println("Enter Student id:: ");
+					Integer sid = Integer.parseInt(br.readLine());
+					
+					 studentRecord= studentController.findById(sid);
+					 
+					 System.out.println(studentRecord);
+					
 					break;
 
 				case 3:
-					System.out.println("DELETE");
+					System.out.println("UPDATE");
+					
 					break;
 
 				case 4:
-					System.out.println("UPDATE");
+					System.out.println("DELETE");
 					break;
 
 				case 5:

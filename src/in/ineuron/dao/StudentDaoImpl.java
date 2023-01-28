@@ -6,6 +6,7 @@ package in.ineuron.dao;
  */
 
 import java.sql.Connection;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
@@ -38,9 +39,8 @@ public class StudentDaoImpl implements IStudentDao
 		String email = student.getEmail();
 		String country = student.getCountry();
 
-		String insertQuery = String.format(
-				"INSERT INTO schooldbo.student_tab2 " + "(`name`,`city`,`email`,`country`) VALUES ('%s','%s','%s','%s')",
-				name, city, email, country);
+		String insertQuery = String.format("INSERT INTO schooldbo.student_tab2 "
+				+ "(`name`,`city`,`email`,`country`) VALUES ('%s','%s','%s','%s')", name, city, email, country);
 
 		// C 14: excuting Query
 		Integer rowAffected = null;
@@ -61,11 +61,46 @@ public class StudentDaoImpl implements IStudentDao
 			return "failed";
 	}
 
+	// write logc for Read Operation
 	@Override
-	public String findById(Integer sid)
+	public Student findById(Integer sid)
 	{
-		// TODO Auto-generated method stub
-		return null;
+
+		System.out.println("StudentDaoImpl.findById()............\n");
+		Connection connection = JdbcUtil.getJdbcConnection();
+		
+		Statement statement = JdbcUtil.getStatement(connection);
+
+		String selectQuery =String.format("SELECT * FROM schooldbo.student_tab2 WHERE sid=%d ", sid); 
+		
+		// to return output as a Student Object
+		Student student = null;
+
+		// execute Query :
+		try
+		{
+			ResultSet resultSet = statement.executeQuery(selectQuery);
+			if (resultSet.next())
+			{
+				// copy the reusltSet data to StudentDTO and trasfer to the view part
+				
+				// Creating new object
+				student = new Student();
+				
+				student.setSid(resultSet.getInt(1));
+				student.setName(resultSet.getString(2));
+				student.setCity(resultSet.getString(3));
+				student.setEmail(resultSet.getString(4));
+				student.setCountry(resultSet.getString(5));
+
+			}
+		} catch (SQLException e)
+		{
+			e.printStackTrace();
+		}
+
+		// return student object with result
+		return student;
 	}
 
 	@Override

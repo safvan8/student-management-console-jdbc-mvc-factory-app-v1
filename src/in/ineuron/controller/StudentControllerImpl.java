@@ -23,10 +23,16 @@ public class StudentControllerImpl implements IStudentController
 	}
 
 	@Override
-	public String findById(Integer sid)
+	public Student findById(Integer sid)
 	{
-		// TODO Auto-generated method stub
-		return null;
+		System.out.println("StudentControllerImpl.findById().... \n");
+		
+		// creating object  studentService
+		studentService = StudentServiceFactory.getStudentService();
+		
+		// forwarsing sid to service layer
+		return studentService.findById(sid);
+		
 	}
 
 	@Override

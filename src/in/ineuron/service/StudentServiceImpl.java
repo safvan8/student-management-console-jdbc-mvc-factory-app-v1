@@ -22,9 +22,13 @@ public class StudentServiceImpl implements IStudentService
 	}
 
 	@Override
-	public String findById(Integer sid)
+	public Student findById(Integer sid)
 	{
-		return null;
+		System.out.println("StudentServiceImpl.findById() .......\n");
+	
+		studentDao = StudentDaoFactory.getStudentDao();
+		
+		return studentDao.findById(sid);
 	}
 
 	@Override

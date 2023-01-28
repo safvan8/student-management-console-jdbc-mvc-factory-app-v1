@@ -46,6 +46,11 @@ public class Student
 	}
 
 	// setters
+	public void setSid(Integer sid)
+	{
+		this.sid=sid;
+	}
+	
 	public void setName(String name)
 	{
 		this.name = name;
