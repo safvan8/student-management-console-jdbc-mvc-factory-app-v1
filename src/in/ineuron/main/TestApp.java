@@ -19,7 +19,7 @@ public class TestApp
 		String name, city, email, country;
 
 		String status = null;
-		
+
 		Student studentRecord;
 
 		try
@@ -85,19 +85,28 @@ public class TestApp
 
 				case 2:
 					System.out.println("READ");
-					
+
 					System.out.println("Enter Student id:: ");
 					Integer sid = Integer.parseInt(br.readLine());
-					
-					 studentRecord= studentController.findById(sid);
-					 
-					 System.out.println(studentRecord);
-					
+
+					// studentRecord contains fetched student details from DB
+					studentRecord = studentController.findById(sid);
+
+					// printing the result to end user
+					if (studentRecord != null)
+					{
+						System.out.println("Student  details existing in DB ::");
+						System.out.println(studentRecord+"\n");
+					} else
+					{
+						System.out.println("Student record not available for the id: " + sid);
+					}
+
 					break;
 
 				case 3:
 					System.out.println("UPDATE");
-					
+
 					break;
 
 				case 4:
