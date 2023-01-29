@@ -104,10 +104,40 @@ public class StudentDaoImpl implements IStudentDao
 	}
 
 	@Override
-	public String updateById(Integer sid)
+	public String updateById(Student  student)
 	{
-		// TODO Auto-generated method stub
-		return null;
+		// geting connection and creating Statement
+		connection = JdbcUtil.getJdbcConnection();
+		statement = JdbcUtil.getStatement(connection);
+		
+		// getting Details from newStudentObject to update
+		String name= student.getName();
+		String city = student.getCity();
+		String email = student.getEmail();
+		String coutry = student.getCountry();
+		Integer id = student.getSid();
+		
+		String updateQuery=String.format("UPDATE schooldbo.student_tab2 SET name='%s', city ='%s', email='%s' ,country='%s'"
+				+ "WHERE sid=%d",name,city,email,coutry,id) ;
+		
+		// executing update query
+		int rowAffected=0;
+		try
+		{
+			rowAffected = statement.executeUpdate(updateQuery);
+		} catch (SQLException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		if (rowAffected == 1)
+		{
+			return "success";
+		}
+		else
+			return "failed";
+
 	}
 
 	@Override

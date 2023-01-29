@@ -31,8 +31,8 @@ public class TestApp
 
 				System.out.println("1 : CREATE");
 				System.out.println("2 : READ");
-				System.out.println("3 : DELETE");
-				System.out.println("4 : UPDATE");
+				System.out.println("3 : UPDATE");
+				System.out.println("4 : DELETE");
 				System.out.println("5 : EXIT");
 
 				System.out.println("Enter your option [1,2,3,4,5]...");
@@ -90,6 +90,7 @@ public class TestApp
 					Integer sid = Integer.parseInt(br.readLine());
 
 					// studentRecord contains fetched student details from DB
+					studentController = StudentControllerFactory.getIStudentController();
 					studentRecord = studentController.findById(sid);
 
 					// printing the result to end user
@@ -132,6 +133,9 @@ public class TestApp
 								.println("Enter new Country [ old name: " + existingStudentObj.getCountry() + " ]-->");
 						String newCountry = br.readLine();
 
+						// updating id
+						newStudentObj.setSid(sid_to_update);
+						
 						// updating name only if user enterd new valid data
 						if (newName == null || newName.trim().equals(""))
 						{
@@ -163,6 +167,20 @@ public class TestApp
 						else
 							newStudentObj.setCountry(newCountry);
 						
+						
+						 // passing newStudent object to controller for Performing update
+						 studentController = StudentControllerFactory.getIStudentController();
+						 
+						  status= studentController.updateById(newStudentObj);
+						  
+						  if (status.equalsIgnoreCase("success"))
+						  {
+							  System.out.println("Record updated successfully for the id : "+sid_to_update);
+						  }
+						  else
+						  {
+							  System.out.println("Record Update failed");
+						  }
 					} 
 					else
 					{

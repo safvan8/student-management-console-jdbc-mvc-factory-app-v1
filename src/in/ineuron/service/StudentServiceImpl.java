@@ -32,10 +32,12 @@ public class StudentServiceImpl implements IStudentService
 	}
 
 	@Override
-	public String updateById(Integer sid)
+	public String updateById(Student student)
 	{
-		// TODO Auto-generated method stub
-		return null;
+		System.out.println("StudentServiceImpl.updateById(student)..........\n");
+		studentDao = StudentDaoFactory.getStudentDao();
+		
+		return studentDao.updateById(student);
 	}
 
 	@Override

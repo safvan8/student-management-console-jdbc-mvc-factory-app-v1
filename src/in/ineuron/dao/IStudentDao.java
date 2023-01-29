@@ -9,7 +9,7 @@ public interface IStudentDao
 
 	Student findById(Integer sid); // create record
 
-	String updateById(Integer sid);
+	String updateById(Student student);
 
 	String deleteById(String sid);
 

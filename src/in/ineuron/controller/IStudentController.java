@@ -8,7 +8,7 @@ public interface IStudentController
 	
 	Student findById(Integer sid); // create record
 	
-	String updateById(Integer sid); 
+	String updateById(Student  student); 
 	
 	String deleteById(String sid);
 }

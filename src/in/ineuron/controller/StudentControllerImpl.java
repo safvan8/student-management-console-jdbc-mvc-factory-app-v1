@@ -36,10 +36,15 @@ public class StudentControllerImpl implements IStudentController
 	}
 
 	@Override
-	public String updateById(Integer sid)
+	public String updateById(Student student)
 	{
-		// TODO Auto-generated method stub
-		return null;
+		System.out.println("StudentControllerImpl.updateById(student)............\n");
+		
+		// passing Object to servcie from Controller
+		studentService = StudentServiceFactory.getStudentService();
+		
+		
+		return studentService.updateById(student);
 	}
 
 	@Override
