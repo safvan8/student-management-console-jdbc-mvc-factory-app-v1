@@ -96,7 +96,7 @@ public class TestApp
 					if (studentRecord != null)
 					{
 						System.out.println("Student  details existing in DB ::");
-						System.out.println(studentRecord+"\n");
+						System.out.println(studentRecord + "\n");
 					} else
 					{
 						System.out.println("Student record not available for the id: " + sid);
@@ -106,6 +106,68 @@ public class TestApp
 
 				case 3:
 					System.out.println("UPDATE");
+
+					// checking whether records available for updating , or not
+					System.out.println("Enter id of the student to update details:: ");
+					Integer sid_to_update = Integer.parseInt(br.readLine());
+
+					// checking student is already existing or not
+					Student existingStudentObj = studentController.findById(sid_to_update);
+
+					if (existingStudentObj != null)
+					{
+						// creating a new Student opbject to pass updated details to coontroller
+						Student newStudentObj = new Student();
+
+						System.out.println("Enter new  name [ old name: " + existingStudentObj.getName() + " ]-->");
+						String newName = br.readLine();
+
+						System.out.println("Enter new  city [ old city: " + existingStudentObj.getCity() + " ]-->");
+						String newCity = br.readLine();
+
+						System.out.println("Enter new  Email [ old name: " + existingStudentObj.getEmail() + " ]-->");
+						String newEmail = br.readLine();
+
+						System.out
+								.println("Enter new Country [ old name: " + existingStudentObj.getCountry() + " ]-->");
+						String newCountry = br.readLine();
+
+						// updating name only if user enterd new valid data
+						if (newName == null || newName.trim().equals(""))
+						{
+							// setting same name again
+							newStudentObj.setName(existingStudentObj.getName());
+						} else
+						{
+							newStudentObj.setName(newName);
+						}
+
+						// updating city only if user enterd new valid data
+						if (newCity == null || newCity.trim().equals(""))
+						{
+							newStudentObj.setCity(existingStudentObj.getCity());
+						} else
+						{
+							newStudentObj.setCity(newCity);
+						}
+
+						// updating Email only if user enterd new valid data
+						if (newEmail == null || newEmail.trim().equals(""))
+							newStudentObj.setEmail(existingStudentObj.getEmail());
+						else
+							newStudentObj.setEmail(newEmail);
+
+						// updating country only if user enterd new valid data
+						if (newCountry== null || newCountry.trim().equals(""))
+							newStudentObj.setCountry(existingStudentObj.getCountry());
+						else
+							newStudentObj.setCountry(newCountry);
+						
+					} 
+					else
+					{
+						System.out.println("Student record not available for id ::" + sid_to_update);
+					}
 
 					break;
 
