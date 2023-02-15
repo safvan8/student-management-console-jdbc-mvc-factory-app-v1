@@ -17,7 +17,7 @@ public class StudentControllerImpl implements IStudentController
 
 		// C6: ServiceServiceImpl object creation
 		studentService = StudentServiceFactory.getStudentService();
-		
+
 		// C7: transferring student object to service layer
 		return studentService.save(student);
 	}
@@ -26,32 +26,35 @@ public class StudentControllerImpl implements IStudentController
 	public Student findById(Integer sid)
 	{
 		System.out.println("StudentControllerImpl.findById().... \n");
-		
-		// creating object  studentService
+
+		// creating object studentService
 		studentService = StudentServiceFactory.getStudentService();
-		
+
 		// forwarsing sid to service layer
 		return studentService.findById(sid);
-		
+
 	}
 
 	@Override
 	public String updateById(Student student)
 	{
 		System.out.println("StudentControllerImpl.updateById(student)............\n");
-		
+
 		// passing Object to servcie from Controller
 		studentService = StudentServiceFactory.getStudentService();
-		
-		
+
 		return studentService.updateById(student);
 	}
 
 	@Override
-	public String deleteById(String sid)
+	public String deleteById(Integer sid)
 	{
-		// TODO Auto-generated method stub
-		return null;
+		System.out.println("StudentControllerImpl.deleteById(-)...........\n");
+
+		// passing Object to servcie from Controller
+		studentService = StudentServiceFactory.getStudentService();
+
+		return studentService.deleteById(sid);
 	}
 
 }

@@ -10,5 +10,5 @@ public interface IStudentController
 	
 	String updateById(Student  student); 
 	
-	String deleteById(String sid);
+	String deleteById(Integer sid);
 }

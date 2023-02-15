@@ -68,11 +68,11 @@ public class StudentDaoImpl implements IStudentDao
 
 		System.out.println("StudentDaoImpl.findById()............\n");
 		Connection connection = JdbcUtil.getJdbcConnection();
-		
+
 		Statement statement = JdbcUtil.getStatement(connection);
 
-		String selectQuery =String.format("SELECT * FROM schooldbo.student_tab2 WHERE sid=%d ", sid); 
-		
+		String selectQuery = String.format("SELECT * FROM schooldbo.student_tab2 WHERE sid=%d ", sid);
+
 		// to return output as a Student Object
 		Student student = null;
 
@@ -83,10 +83,10 @@ public class StudentDaoImpl implements IStudentDao
 			if (resultSet.next())
 			{
 				// copy the reusltSet data to StudentDTO and trasfer to the view part
-				
+
 				// Creating new object
 				student = new Student();
-				
+
 				student.setSid(resultSet.getInt(1));
 				student.setName(resultSet.getString(2));
 				student.setCity(resultSet.getString(3));
@@ -104,24 +104,25 @@ public class StudentDaoImpl implements IStudentDao
 	}
 
 	@Override
-	public String updateById(Student  student)
+	public String updateById(Student student)
 	{
 		// geting connection and creating Statement
 		connection = JdbcUtil.getJdbcConnection();
 		statement = JdbcUtil.getStatement(connection);
-		
+
 		// getting Details from newStudentObject to update
-		String name= student.getName();
+		String name = student.getName();
 		String city = student.getCity();
 		String email = student.getEmail();
 		String coutry = student.getCountry();
 		Integer id = student.getSid();
-		
-		String updateQuery=String.format("UPDATE schooldbo.student_tab2 SET name='%s', city ='%s', email='%s' ,country='%s'"
-				+ "WHERE sid=%d",name,city,email,coutry,id) ;
-		
+
+		String updateQuery = String.format(
+				"UPDATE schooldbo.student_tab2 SET name='%s', city ='%s', email='%s' ,country='%s'" + "WHERE sid=%d",
+				name, city, email, coutry, id);
+
 		// executing update query
-		int rowAffected=0;
+		int rowAffected = 0;
 		try
 		{
 			rowAffected = statement.executeUpdate(updateQuery);
@@ -130,21 +131,38 @@ public class StudentDaoImpl implements IStudentDao
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
 		if (rowAffected == 1)
 		{
 			return "success";
-		}
-		else
+		} else
 			return "failed";
 
 	}
 
 	@Override
-	public String deleteById(String sid)
+	public String deleteById(Integer sid)
 	{
-		// TODO Auto-generated method stub
-		return null;
+		// getting connection and creating statement Object
+		connection = JdbcUtil.getJdbcConnection();
+		statement = JdbcUtil.getStatement(connection);
+
+		String deleteQuery = String.format("DELETE FROM schooldbo.student_tab2 WHERE sid=%d", sid);
+
+		int rowsAffected = 0;
+		// executing delete query
+		try
+		{
+			rowsAffected = statement.executeUpdate(deleteQuery);
+		} catch (Exception e)
+		{
+			e.printStackTrace();
+		}
+		if (rowsAffected == 1)
+		{
+			return "success";
+		} else
+			return "failed";
 	}
 
 }

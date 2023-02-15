@@ -25,9 +25,9 @@ public class StudentServiceImpl implements IStudentService
 	public Student findById(Integer sid)
 	{
 		System.out.println("StudentServiceImpl.findById() .......\n");
-	
+
 		studentDao = StudentDaoFactory.getStudentDao();
-		
+
 		return studentDao.findById(sid);
 	}
 
@@ -36,15 +36,21 @@ public class StudentServiceImpl implements IStudentService
 	{
 		System.out.println("StudentServiceImpl.updateById(student)..........\n");
 		studentDao = StudentDaoFactory.getStudentDao();
-		
+
 		return studentDao.updateById(student);
 	}
 
 	@Override
-	public String deleteById(String sid)
+	public String deleteById(Integer sid)
 	{
-		// TODO Auto-generated method stub
-		return null;
+		// : recieving sid from the controller to servcie
+
+		// Object creation of StudentDaoImpl
+		studentDao = StudentDaoFactory.getStudentDao();
+
+		// passing sid to DAO layer
+		return studentDao.deleteById(sid);
+
 	}
 
 }

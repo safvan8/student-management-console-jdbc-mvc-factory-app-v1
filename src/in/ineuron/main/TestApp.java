@@ -18,7 +18,6 @@ public class TestApp
 
 		String name, city, email, country;
 
-		String status = null;
 
 		Student studentRecord;
 
@@ -46,7 +45,10 @@ public class TestApp
 				{
 				case 1:
 					System.out.println("CREATE");
-
+					
+					// to print status of the operation
+					String createStatus = null;
+					
 					// C1: Creating Student Object
 					Student student = new Student();
 
@@ -71,13 +73,13 @@ public class TestApp
 
 					// C4: transferring object data to the Controller by calling save method inside
 					// controller
-					status = studentController.save(student);
+					createStatus = studentController.save(student);
 
 					// C 16: now status conatin success/failed message
 
-					if (status.equalsIgnoreCase("success"))
+					if (createStatus.equalsIgnoreCase("success"))
 						System.out.println("Record Inserted Successfully");
-					else if (status.equalsIgnoreCase("failed"))
+					else if (createStatus.equalsIgnoreCase("failed"))
 						System.out.println("Record Insertion failed");
 					else
 						System.out.println("Ooops...Something went wrong...");
@@ -86,6 +88,7 @@ public class TestApp
 				case 2:
 					System.out.println("READ");
 
+					
 					System.out.println("Enter Student id:: ");
 					Integer sid = Integer.parseInt(br.readLine());
 
@@ -108,6 +111,10 @@ public class TestApp
 				case 3:
 					System.out.println("UPDATE");
 
+					// to print status of the operation
+					String updateStatus = null;
+					
+					
 					// checking whether records available for updating , or not
 					System.out.println("Enter id of the student to update details:: ");
 					Integer sid_to_update = Integer.parseInt(br.readLine());
@@ -135,7 +142,7 @@ public class TestApp
 
 						// updating id
 						newStudentObj.setSid(sid_to_update);
-						
+
 						// updating name only if user enterd new valid data
 						if (newName == null || newName.trim().equals(""))
 						{
@@ -162,27 +169,24 @@ public class TestApp
 							newStudentObj.setEmail(newEmail);
 
 						// updating country only if user enterd new valid data
-						if (newCountry== null || newCountry.trim().equals(""))
+						if (newCountry == null || newCountry.trim().equals(""))
 							newStudentObj.setCountry(existingStudentObj.getCountry());
 						else
 							newStudentObj.setCountry(newCountry);
-						
-						
-						 // passing newStudent object to controller for Performing update
-						 studentController = StudentControllerFactory.getIStudentController();
-						 
-						  status= studentController.updateById(newStudentObj);
-						  
-						  if (status.equalsIgnoreCase("success"))
-						  {
-							  System.out.println("Record updated successfully for the id : "+sid_to_update);
-						  }
-						  else
-						  {
-							  System.out.println("Record Update failed");
-						  }
-					} 
-					else
+
+						// passing newStudent object to controller for Performing update
+						studentController = StudentControllerFactory.getIStudentController();
+
+						updateStatus = studentController.updateById(newStudentObj);
+
+						if (updateStatus.equalsIgnoreCase("success"))
+						{
+							System.out.println("Record updated successfully for the id : " + sid_to_update);
+						} else
+						{
+							System.out.println("Record Update failed");
+						}
+					} else
 					{
 						System.out.println("Student record not available for id ::" + sid_to_update);
 					}
@@ -191,6 +195,33 @@ public class TestApp
 
 				case 4:
 					System.out.println("DELETE");
+
+					// to print status of the operation
+					String deleteStatus = null;
+					
+					
+					// checking whether records available for deleting or not
+					System.out.println("Enter id of the student to delete record:: ");
+					Integer sid_to_delete = Integer.parseInt(br.readLine());
+
+					// checking whether the record is existing or not
+					Student existingStudentForDelete = studentController.findById(sid_to_delete);
+
+					if (existingStudentForDelete != null)
+					{
+						System.out.println("\n Record available for Deletion......");
+
+						// passing sid to controller for Performing delete opertaion
+						deleteStatus = studentController.deleteById(sid_to_delete);
+					} else
+					{
+						System.out.println("Record , which you are looking for is not available......");
+					}
+
+					if ( deleteStatus.equals("success"))
+						System.out.println("\nRecord Deleted Succesfully..........");
+					else
+						System.out.println("\n Oopz..Record deletion failed");
 					break;
 
 				case 5:

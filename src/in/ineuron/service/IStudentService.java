@@ -10,5 +10,5 @@ public interface IStudentService
 
 	String updateById(Student student);
 
-	String deleteById(String sid);
+	String deleteById(Integer sid);
 }
