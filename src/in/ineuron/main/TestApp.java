@@ -10,14 +10,17 @@ import in.ineuron.factory.StudentControllerFactory;
 
 public class TestApp
 {
+	// creating Buffered Reader to Read input from Console
+	static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+
 	// starting of the APP
 	public static void main(String[] args)
 	{
+		System.out.println("----------- WELCOME to Student Management Appliaction --------------- ");
 
 		IStudentController studentController = null;
 
 		String name, city, email, country;
-
 
 		Student studentRecord;
 
@@ -25,18 +28,9 @@ public class TestApp
 		{
 			while (true)
 			{
-				// creating Buffered Reader to Read input from Console
-				BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
-				System.out.println("1 : CREATE");
-				System.out.println("2 : READ");
-				System.out.println("3 : UPDATE");
-				System.out.println("4 : DELETE");
-				System.out.println("5 : EXIT");
-
-				System.out.println("Enter your option [1,2,3,4,5]...");
-
-				Integer option = Integer.parseInt(br.readLine());
+				Integer option = 0;
+				option = acceptUserInput();
 
 				// Creating Object of Controller without knowing impl class
 				studentController = StudentControllerFactory.getIStudentController();
@@ -45,10 +39,10 @@ public class TestApp
 				{
 				case 1:
 					System.out.println("CREATE");
-					
+
 					// to print status of the operation
 					String createStatus = null;
-					
+
 					// C1: Creating Student Object
 					Student student = new Student();
 
@@ -88,7 +82,6 @@ public class TestApp
 				case 2:
 					System.out.println("READ");
 
-					
 					System.out.println("Enter Student id:: ");
 					Integer sid = Integer.parseInt(br.readLine());
 
@@ -113,8 +106,7 @@ public class TestApp
 
 					// to print status of the operation
 					String updateStatus = null;
-					
-					
+
 					// checking whether records available for updating , or not
 					System.out.println("Enter id of the student to update details:: ");
 					Integer sid_to_update = Integer.parseInt(br.readLine());
@@ -198,8 +190,7 @@ public class TestApp
 
 					// to print status of the operation
 					String deleteStatus = null;
-					
-					
+
 					// checking whether records available for deleting or not
 					System.out.println("Enter id of the student to delete record:: ");
 					Integer sid_to_delete = Integer.parseInt(br.readLine());
@@ -218,7 +209,7 @@ public class TestApp
 						System.out.println("Record , which you are looking for is not available......");
 					}
 
-					if ( deleteStatus.equals("success"))
+					if (deleteStatus.equals("success"))
 						System.out.println("\nRecord Deleted Succesfully..........");
 					else
 						System.out.println("\n Oopz..Record deletion failed");
@@ -229,8 +220,8 @@ public class TestApp
 					System.exit(0);
 
 				default:
-					System.out.println("invalid Option. please Enter a number between 1 to 5  ");
 					break;
+
 				}
 			}
 		}
@@ -240,5 +231,45 @@ public class TestApp
 
 			e.printStackTrace();
 		}
+	}
+
+	public static int acceptUserInput()
+	{
+
+		System.out.println("1 : CREATE");
+		System.out.println("2 : READ");
+		System.out.println("3 : UPDATE");
+		System.out.println("4 : DELETE");
+		System.out.println("5 : EXIT");
+
+		System.out.println("Enter your option [ 1 to 5 ]...");
+
+		Integer userInput = 0;
+		boolean isValidInput = false;
+
+		// user input validation
+		while (isValidInput == false)
+		{
+			try
+			{
+				userInput = Integer.parseInt(br.readLine());
+			} catch (NumberFormatException e)
+			{
+				isValidInput = false;
+				System.err.println(" only Numbers allowed");
+			} catch (Exception e)
+			{
+				isValidInput = false;
+				System.err.println("Something went wrong " + e);
+			}
+
+			if (userInput >= 1 && userInput <= 5)
+				isValidInput = true;
+			else
+			{
+				System.err.println("Kindly enter a number from 1 to 5: ");;
+			}		
+		}
+		return userInput;
 	}
 }
