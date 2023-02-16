@@ -1,14 +1,18 @@
 package in.ineuron.util;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.sql.Connection;
 
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Properties;
 
 public class JdbcUtil
 {
-	private static Connection connection;
+	private static Connection physicalConnection;
 	private static Statement statement;
 
 	private JdbcUtil()
@@ -28,16 +32,35 @@ public class JdbcUtil
 
 	public static Connection getJdbcConnection()
 	{
-		if (connection == null)
+		FileInputStream fis = null;
+
+		// creating properties object
+		Properties properties = new Properties();
+		try
+		{ // getting Inputstream
+			fis = new FileInputStream(new File("src\\in\\ineuron\\properties\\database.properties"));
+			// loading properties file
+			properties.load(fis);
+		} catch (Exception e1)
+		{
+			e1.printStackTrace();
+		}
+
+		// getting db details from properties
+		String url = properties.getProperty("url");
+		String username = properties.getProperty("username");
+		String password = properties.getProperty("password");
+
+		if (physicalConnection == null)
 			try
 			{
-				connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/schooldbo", "root", "Safvan@123");
+				physicalConnection = DriverManager.getConnection(url, username, password);
 			} catch (SQLException e)
 			{
 				e.printStackTrace();
 			}
 
-		return connection;
+		return physicalConnection;
 
 	}
 

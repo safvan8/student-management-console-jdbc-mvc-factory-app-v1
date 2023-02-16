@@ -170,10 +170,15 @@ public class TestApp
 						studentController = StudentControllerFactory.getIStudentController();
 
 						updateStatus = studentController.updateById(newStudentObj);
-
-						if (updateStatus.equalsIgnoreCase("success"))
+						if (updateStatus != null)
 						{
-							System.out.println("Record updated successfully for the id : " + sid_to_update);
+							if (updateStatus.equalsIgnoreCase("success"))
+							{
+								System.out.println("Record updated successfully for the id : " + sid_to_update);
+							} else
+							{
+								System.out.println("Record Update failed");
+							}
 						} else
 						{
 							System.out.println("Record Update failed");
@@ -208,11 +213,16 @@ public class TestApp
 					{
 						System.out.println("Record , which you are looking for is not available......");
 					}
-
-					if (deleteStatus.equals("success"))
-						System.out.println("\nRecord Deleted Succesfully..........");
-					else
+					if (deleteStatus != null)
+					{
+						if (deleteStatus.equals("success"))
+							System.out.println("\nRecord Deleted Succesfully..........");
+						else
+							System.out.println("\n Oopz..Record deletion failed");
+					} else
+					{
 						System.out.println("\n Oopz..Record deletion failed");
+					}
 					break;
 
 				case 5:
