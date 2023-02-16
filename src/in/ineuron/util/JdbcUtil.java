@@ -10,6 +10,9 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Properties;
 
+import com.zaxxer.hikari.HikariConfig;
+import com.zaxxer.hikari.HikariDataSource;
+
 public class JdbcUtil
 {
 	private static Connection physicalConnection;
@@ -31,6 +34,25 @@ public class JdbcUtil
 	}
 
 	public static Connection getJdbcConnection()
+	{
+		Connection connection = null;
+		try
+		{
+			// creating Hikrari config
+			HikariConfig config = new HikariConfig("src\\in\\ineuron\\properties\\database.properties");
+
+			// creating dataSource object
+			HikariDataSource dataSource = new HikariDataSource(config);
+
+			connection = dataSource.getConnection();
+		} catch (Exception e)
+		{
+			e.printStackTrace();
+		}
+		return connection;
+	}
+
+	public static Connection getJdbcPhysicalConnection()
 	{
 		FileInputStream fis = null;
 
