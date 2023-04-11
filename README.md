@@ -23,7 +23,7 @@ This is a simple console-based Java application that manages student records. It
 
 1. Clone the repository to your local machine
 2. Open the project in an IDE of your choice
-3. Run the `Main.java` file to start the application
+3. Run the `TestApp.java` file to start the application
 
 ## Usage
 
